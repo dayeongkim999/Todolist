@@ -18,4 +18,7 @@ public class MemoryListRepository implements ListRepository{
         return dolist;
     }
 
+    @Override
+    public List<Todolist> findAll(){return new ArrayList<>(store.values());}
+
 }
