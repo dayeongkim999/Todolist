@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,11 +18,17 @@ public class TodolistController {
     private final ListService listService;
 
     @PostMapping("list")
+    @ResponseBody
     public Todolist addDolist(@RequestParam("dolist") String dolist){
         Todolist todolist = new Todolist();
         todolist.setDolist(dolist);
         listRepository.save(todolist);
         return todolist;
+    }
+    @GetMapping("list")
+    @ResponseBody
+    public List<Todolist> getMembers() {
+        return listRepository.findAll();
     }
 
 
@@ -40,7 +43,7 @@ public class TodolistController {
         Todolist todolist = new Todolist();
         todolist.setDolist(form.getList());
         listService.join(todolist);
-        return "redirect:/lists/todolist";
+        return "redirect:/";
     }
 
     @GetMapping(value = "/lists")
